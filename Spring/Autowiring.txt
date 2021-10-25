@@ -1,0 +1,98 @@
+1.XML Based Autowiring
+2.Annotation Based Autowiring
+3.Auto-Discovery[Stereo Types]
+4.Java Based Autowiring
+
+
+1. xml based autowiring:..............................................................
+
+	<bean id="--" class="--" autowire="value">
+	Here value may be either of the following "autowiring modes".
+    1.no
+    2.byName
+	3.byType
+    4.constructor
+	
+	
+	1.no : It is representing "no" autowiring for the beans injection, we must provide explicit
+           configuration for the beans injection.
+		   
+	2. byName : based on property name
+	
+	3. by type : based on type of property it use setter injection
+	
+	4. by constructor : based on constructor same as  based on type but it use constructor injection
+
+		
+<bean id="emp" class="com.durgasoft.beans.Employee" autowire="byName">
+	<property name="eid" value="E-111"/>
+	<property name="ename" value="Durga"/>
+	<!--
+	<property name="eaddr" ref="eaddr"/>
+	<property name="eacc" ref="eacc"/>
+	-->
+</bean>
+
+<bean id="emp" class="com.durgasoft.beans.Employee" autowire="constructor">
+	<constructor-arg name="eid" value="E-111"/>
+	<constructor-arg name="ename" value="Durga"/>
+</bean>
+
+2. annotation based configuration ................................................
+	
+	1.@Required
+		This annotation will make IOC Container to inject a particular bean object in another
+		bean object is mandatory. We have to use this annotation at method level, that is, just
+		before setXXX() method. After providing this annotation, if we are not providing the
+		respectiove bean injection then IOC Container will rise an exception .
+		
+	2. @Autowired
+		This annotation is able to represent autowiring in bean classes, it will be used at
+        method level, field level and local variables level in constructor dependency injection.
+		
+		Note: This annotation is following "byType" autowiring internally in spring
+        applications, If we want to use this annotation then we must have only one bean
+		configuration withh the respective type in configuration file, if we have more than one
+		bean configuration with the same type then IOC Container will rise an exception.
+		
+	3. @Qualifier
+	
+		"@Qualifier" annotation, it will be used to specify a particular bean object
+		among the multiple beans of the same type for injection.
+		EX: @Qualifier("bean_Identity")
+		
+		
+		
+		@Autowired(required=true)
+		//@Required
+		@Qualifier("adv_Java")
+		public void setScourse(Course scourse) {
+			his.scourse = scourse;
+			
+		@Autowired
+		public Student(String sid, String sname,
+						@Qualifier("adv_Java")Course scourse){
+			this.sid=sid;
+			this.sname=sname;
+			this.scourse=scourse;
+		}
+		
+		
+3.Auto-Discovery[Stereo Types]....................................................................
+
+	1.@Component: It will represent a component which is recognized by Spring
+                  Container.
+	2.@Repository: It will represent a class as Model Driven , that is, DAO.
+	3.@Service : It will represent a class as Service class.
+	4.@Controller: It will represent a class as Controller class, it will be used in Spring
+	WEB-MVC Module.
+	
+	
+	<context:component-scan base-package="---"/>
+
+
+		
+
+
+
+
