@@ -1,0 +1,30 @@
+Ioc Container :  to read bean configurations from configuration file , creating Bean objects and Providing bean Objects to Spring applications.
+
+BeanFactory : interface "org.springframework.beans.factory.BeanFactory".
+			: implementation class "org.springframework.beans.factory.xml.XmlBeanFactory"
+			: Resource -> interface "org.springframework.core.io.Resource" to represent all bean configuration details
+				implementation class : org.springframework.core.io.ByteArrayResource present in byte[] form
+								     : org.springframework.core.io.FileSystemResource present in form of file
+									 : org.springframework.core.io.ClassPathResource: present in class path environment variable
+									 : org.springframework.core.io.InputStreamResource: in form of inputstream
+									 : org.springframework.core.io.UrlResource:
+									 : org.springframework.web.context.support.ServletContextResource:
+									 : org.apringframework.web.portlet.context.PortletContextResource:
+									 
+			: Resource res=new ClassPathResource("beans.xml");
+			  BeanFactory factory=new XmlBeanFactrory(res);
+			  HelloBean bean=(HelloBean)factory.getBean("hello");
+			: depricate in version 3
+
+ApplicationContext : internationalization , Eventhandelling
+				   : child interface of bean factory
+				   : impl : ClassPathXmlApplicationContext , FileSystemXmlApplicationContext , WebXmlApplicationContext
+				   
+				   
+not support AOP : support AOP
+for stand alone : for both 
+create singleton object on call lazy : create when we activate container 
+only support singletone , prototype :  supplort all type
+ 
+ 
+ 

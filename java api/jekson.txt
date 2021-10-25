@@ -1,0 +1,115 @@
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.9.8</version>
+</dependency>
+
+
+1> Read Value in objectMapper(Deserialization)(Json To Java)
+
+	ObjectMapper mapper = new ObjectMapper();
+	T t = mapper.readValue(jsonString, T.calss);+
+	Reader reader = new StringReader(jsonString);
+	T t = mapper.readvalue(reader , T.class);
+	T t = mapper.readValue(fileObject , T.class);
+	T t = mapper.readValue(urlObject , T.class);
+	T t = mapper.readValue(inputStream , T.class);
+	T t = mapper.readValue(bytes , T.class);
+	T[] t = mapper.readValue(jsonarray , T.class);
+	List<T> t = mapper.readValue(jsonArray , new TypeReference<List<Car>>(){})
+	Map<String , object> t = mapper.readValue(jsonSTring , new TypeReference<Map<STring, Object>>(){});
+
+	mapper.configure(DeserializationFeature.FAIl_ON_UNKNOWN_PROPERTIES , false);
+
+	mapper.configure(Deserializationfeature.FAIL_ON_NULL_FOR_PREMITIVE, true);
+
+
+2> Write Value (Serialization) (java to json)
+
+	mapper.writeValye(fileOutputStream  , Tobject);
+	mapper.writeValueAsString(Tobject);
+
+
+3> jekson date formate
+	Transaction transaction = new transaction("transfer", new Date())
+	mapper.writeValueAsString(transaction);
+
+	SimpleDateFormate formate = new SimpleDateFormate(yyyy-MM-dd);
+	mapper.setDateFormate(formate);
+	mapper.writeValueAsString(transaction);
+
+4>json Node
+
+    String carJson =
+			"{ \"brand\" : \"Mercedes\", \"doors\" : 5," +
+			"  \"owners\" : [\"John\", \"Jack\", \"Jill\"]," +
+			"  \"nestedObject\" : { \"field\" : \"value\" } }";
+
+	ObjectMapper objectMapper = new ObjectMapper();
+
+
+	try {
+
+		JsonNode jsonNode = objectMapper.readValue(carJson, JsonNode.class);
+
+		JsonNode brandNode = jsonNode.get("brand");
+		String brand = brandNode.asText();
+		System.out.println("brand = " + brand);
+
+		JsonNode doorsNode = jsonNode.get("doors");
+		int doors = doorsNode.asInt();
+		System.out.println("doors = " + doors);
+
+		JsonNode array = jsonNode.get("owners");
+		JsonNode jsonNode = array.get(0);
+		String john = jsonNode.asText();
+		System.out.println("john  = " + john);
+
+		JsonNode child = jsonNode.get("nestedObject");
+		JsonNode childField = child.get("field");
+		String field = childField.asText();
+		System.out.println("field = " + field);
+
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	
+5> onvert object to jsonNode
+
+	mapper.valueToTree(Tobject);
+	
+6> convert jsonnode to object 
+
+   mapper.TreeToValue(jsonNode);
+
+
+
+	
+	
+
+Read Object From JSON String
+Read Object From JSON Reader
+Read Object From JSON File
+Read Object From JSON via URL
+Read Object From JSON InputStream
+Read Object From JSON Byte Array
+Read Object Array From JSON Array String
+Read Object List From JSON Array String
+Read Map from JSON String
+Ignore Unknown JSON Fields
+Fail on Null JSON Values for Primitive Types
+Custom Deserializer
+Write JSON From Objects
+Custom Serializer
+Jackson Date Formats
+Date to long
+Date to String
+Jackson JSON Tree Model
+Jackson Tree Model Example
+The Jackson JsonNode Class
+Convert Object to JsonNode
+Convert JsonNode to Object
+Reading and Writing Other Data Formats With the Jackson ObjectMapper
+Reading and Writing CBOR With the Jackson ObjectMapper
+Reading and Writing MessagePack With the Jackson ObjectMapper
+Reading and Writing YAML With the Jackson ObjectMapper

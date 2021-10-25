@@ -1,0 +1,20 @@
+1> javac : we can compile any number of file ata time but can run only one file at a time
+
+		javac [options] test.java
+		[options] -source , -version , -cp<path> , -d<directory>
+		
+		java [options] classfile arg[0] arg[1]
+		[options] -version , -ea/-esa/-da/-dsa , -D , -cp/-classpth
+		
+2> classpath : location where all required .class file located. jvm and compiler will use this path
+		
+		set classpth : 1> permenantly by using environment variable "classpath"
+					   2> temparory by command prompt level using set command ->  once you close command prompt classpath variable will lost
+					   3> for perticular command level using -cp or -class path command : this classpath is available for that command execution
+					   4> by default jvm and compiler will look for in CWD for required class file. if we set classpath explicitely it will look for that specified location
+					   5> once we set classpth we can run our program from any location
+	
+3> jar file : if several dependent class file required than should not set all file to classpath but bunch them in single file and put in location it is jar file
+
+4> jar : .class file  ; war : .class , saervlet , jsp , html , javascript ; ear : ejb , jsp 
+					   

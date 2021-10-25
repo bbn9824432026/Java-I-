@@ -1,0 +1,132 @@
+1> Function Interface
+
+@FunctionalInterface 
+
+public interface Function<T, R> {
+
+      R apply(T t);
+
+}
+
+Function < String, Integer > function = (t) -> t.length();
+function.apply("Ramesh");
+
+Function < String, Integer > function3 = (t) -> t.length();
+Function < Integer, Integer > function4 = (number) -> number * 2;
+Integer integer = function3.andThen(function4).apply("Ramesh");
+
+
+convertListToMap(list, x -> x.length());
+convertListToMap(List<T> list, Function<T, R> func)
+
+.............................................................................
+2> Predicate Interface
+
+@FunctionalInterface
+
+public interface Predicate<T> {
+
+    boolean test(T t);
+}
+
+Predicate < Integer > predicate = (t) -> {
+            if (t % 2 == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+......................................................................
+3> Consumer Interface
+@FunctionalInterface
+
+public interface Consumer < T > {
+
+    void accept(T t);
+}
+
+Consumer < String > consumer = (t) -> System.out.println(t);
+consumer.accept("Ramesh");
+
+......................................................................
+
+4> Supplier Interface
+
+@FunctionalInterface
+
+public interface Supplier<T> {
+    T get();
+}
+
+Supplier < LocalDateTime > supplier = () -> LocalDateTime.now();
+supplier.get();
+
+..................................................................
+
+5>BiFunction Interface
+
+@FunctionalInterface
+
+public interface BiFunction<T, U, R> {
+     R apply(T t, U u); // Other default and static methods
+     // ...
+}
+
+BiFunction < Integer, Integer, Integer > biFunction = (t, u) -> (t + u);
+BiFunction < Integer, Integer, Integer > substraction = (t, u) -> (t - u);
+
+........................................................................
+
+6>BiConsumer Interface
+
+@FunctionalInterface
+
+public interface BiConsumer<T, U> {
+     void accept(T t, U u);
+     // andThen default method is defined
+}
+
+BiConsumer < Integer, Integer > biConsumer = (a, b) -> System.out.println(a + b);
+
+ BiConsumer < Integer, Integer > substraction = (a, b) -> System.out.println(a - b);
+
+.......................................................................
+
+7>BiPredicate Interface
+
+@FunctionalInterface 
+
+public interface BiPredicate<T, U> {
+     boolean test(T t, U u);
+     // Default methods are defined also
+}
+
+BiPredicate < String, String > biPredicate = (s1, s2) -> s1.equals(s2);
+biPredicate.test("Bipin","Ramesha");
+
+**********************************************************************
+
+Functional Interface
+
+What is a functional interface?
+An Interface that contains exactly one abstract method is known as a functional interface.
+A functional interface can have any number of default, static methods but can contain only one abstract method. It can also declare methods of the object class.
+Functional Interface is also known as Single Abstract Method Interfaces or SAM Interfaces. It is a new feature in Java 8, which helps to achieve a functional programming approach.
+A functional interface can extend another interface only when it does not have any abstract method.
+
+Java @FunctionalInterface Annotation
+We can create a custom functional interface using @FunctionalInterface Annotation. Note that instances of functional interfaces can be created with lambda expressions, method references, or constructor references.
+If a type is annotated with this annotation type, compilers are required to generate an error message unless:
+The type is an interface type and not an annotation type, enum, or class.
+The annotated type satisfies the requirements of a functional interface.
+
+
+
+Function<T , R> function = T -> {operation on t ; return R;}  function.apply(T);
+Predicate<T> predicate = T -> {operation on t; return boolean;} prediacte.test(T);
+Consumer<T> consumer = T -> {operation on t; return void;} consumer.accept(T);
+Supplier<T> supplier = () -> {some operation ; return of type T;} supplier.get();
+
+BiFunction<T,U,R> bifunction = (T, U) -> {operration on T and U ; return of type R ;}  biFunction.apply(T , U);
+BiPrediacte<T,U> biPredicate = (T , U) -> { operation on T and U ; return boolean;}  biPredicate.test(T , U);
+BiConsumer<T , U> biconsumer = (T ,U) -> {operation on T and U; return void;} biConsumer.accept(T, U);

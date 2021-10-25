@@ -1,0 +1,63 @@
+Hibernate________________
+
+1> Hibernate Architracture	
+	1> Configuration(c) :  Configuration class, which consists of the properties and function files of Hibernate.
+					    :  The configuration object is created only once during the application initialization
+					    :  Configuration cfg=new Configuration();
+					    :  cfg.configure();
+					 
+	2> SessionFactory(I):  SessionFactory interface whose object can be obtained by the object of Configuration class.
+					    :  It is a threadsafe object and used by all the threads in the application.
+					    :  SessionFactory factory=cfg.buildSessionFactory();
+					    :  It takes the JDBC information from cfg object and creates a JDBC connection.
+					 
+	3> Session (I)      :  A SessionFactory object is used to create a Session object, which is lightweight object.
+					    :  The Session object is not threadsafe. It also holds the first-level cache data in Hibernate
+					    :  Session session=factory.buildSession();
+					 
+	4> Transaction (I)  :  The object of the session creates a Transaction object.
+					    :  It provides the instruction to the database for transaction management. It is a short-lived single-threaded object.
+					    :  Transaction t=session.beginTransaction();
+					 
+	5> Query and Criteria (I): Query objects use Hibernate Query Language (HQL) to get data from the database.
+						  : Criteria objects are also used to retrieve data from databases. 
+						  : Session objects are used to create query and criteria objects.
+						  : Query query= session.createQuery();
+						  : Criteria criteria=session.createCriteria();
+						  
+						  
+2> Object state
+
+	1>Transient  : if it is initialized using the new operator, and it is not associated with any Hibernate Session.
+				 :  A transient object may be made persistent by calling save(), persist() or saveOrUpdate() functions.
+				 
+	2>Persistent :  A persistent object has a representation in the database, an identifier value, and it is also associated with a Hibernate Session. 
+				 :  In this state, Hibernate will detect changes made to an object and synchronize it with the database. 
+				 : A persistent object may be made transient by calling delete() function
+				 
+	3> Detached  :  When the session of a persistent object has been closed, the object will be known as a detached object. 
+				 :  A detached object may be made persistent by calling update(), saveOrUpdate(), lock() or replicate() functions.
+				 
+				 
+3> Hibernate Annotations 
+
+	1> @Entity
+	2> @Table
+	3> @Id
+	4> @GeneratedValue
+	5> @Column
+	
+
+4> Generation Type 
+
+	1> GenerationType.AUTO :  indicates that the persistence provider should select an appropriate strategy based on the specified database dialect.
+						   :  The AUTO will automatically set the generated values
+						   :  It is the default GenerationType.
+						   
+	2> GenerationType.IDENTITY : indicates that the persistence provider must assign primary keys for the entities using a database identity column. 
+							   :  If the particular database doesn’t support IDENTITY generationtype, the persistence provider will itself choose an alternative strategy.
+							   
+	3> GenerationType.SEQUENCE : indicates that the persistence provider must assign primary keys for the entities using the database sequence
+							   : A SEQUENCE GenerationType is global to the application; it can be accessed by one or more entities in the application
+							   
+	4> GenerationType.TABLE  : 

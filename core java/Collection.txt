@@ -1,0 +1,238 @@
+1> why array? what array?
+2> limitation of array?
+3> Nine Key interface of collection framework :Collection , List , Set , sortedset, navigableset , queue , map , sortedmap , navigablemap 
+3> collection(I) vs collections(C)
+4> Collection Interface
+	- contains common methods to implement by all the classes
+
+5> List Interface:
+
+  1>ArrayList
+	- data structure : resizable array
+	- dulpicate : allowed 
+	- insertion order : preserverd
+	- null insertion : allowed
+	- heterogeneous : allowed
+	- initial capacity :  10 , (cc*3/2)+1
+	- implements serializable and cloneable and random access(retrival purpose)
+	- condition : retrival
+	- synchronised list : getSynchronizedList()
+    - use : 
+
+  2>LinkedList
+	- data structure : double linkedlist
+	- dulpicate : allowed 
+	- insertion order : preserverd
+	- null insertion : allowed
+	- heterogeneous : allowed
+	- initial capacity : 
+	- implements serializable and cloneable 
+	- condition : insertion , deletion (not retrival)
+	- synchronised list : getSynchronizedList()
+    - use : 
+	
+ 3>vector
+	- data structure : resizable array
+	- dulpicate : allowed 
+	- insertion order : preserverd
+	- null insertion : allowed
+	- heterogeneous : allowed
+	- initial capacity :  10 , (cc*2)
+	- implements serializable and cloneable and randomAccess
+	- condition : insertion , deletion (not retrival)
+	- synchronised list : getSynchronizedList()
+    - use : synchronized , thread safe
+	
+  4>Stack
+	- data structure : resizable array
+	- dulpicate : allowed 
+	- insertion order : preserverd
+	- null insertion : allowed
+	- heterogeneous : allowed
+	- initial capacity :  10 , (cc*2)
+	- implements serializable and cloneable and randomAccess
+	- condition : insertion , deletion (not retrival)
+	- synchronised list : getSynchronizedList()
+    - use : synchronized , thread safe
+	- LIFO : push pop peek empty search
+	
+	
+6> 3 cursor in collection 
+
+	1> Enumeration:
+		- only applicable to legacy collection
+		- only read access
+		- single direction
+		
+		Enumeration enum = v.element();
+		while(enum.hasMoreElement()){
+		 enum.nextElement();
+		}
+		
+	2> Iterator 
+		- applicable to all collection object
+		- read and remove (not replacement and addtion in new object)
+		- single direction
+		
+		Iterator it = collection.iterator();
+		while(it.hasNext()){
+		  it.next();
+		  it.remove();
+		}
+		
+	3> ListIterator
+		- only applicable to list object
+		- read / write / replace / addtion
+		-bi-directional
+		
+		ListIterator li = l.listIterator();
+		while(li.hasNext()){
+			li.next();
+			li.nextIndex();
+			li.set(object new);
+			li.addobject new);
+			li.remove();
+		}
+		
+		hasPrevious();
+		previous();
+		previousIndex();
+		
+		
+7> Set Interface
+
+	1> HasSet 
+		- data structure : HashTable
+		- dulpicate : not allowed (no compile time error add() method returns false)
+		- insertion order : not preserverd
+		- null insertion : possible (only once)
+		- heterogeneous : allowed
+		- initial capacity :  16 , fill ratio 0.75
+		- implements serializable and cloneable 
+		- condition : search
+		
+		
+	2> LinkedHasSet (1.4)
+		- data structure : LinkedList and HashTable
+		- dulpicate : not allowed (no compile time error add() method returns false)
+		- insertion order : preserverd
+		- null insertion : possible (only once)
+		- heterogeneous : allowed
+		- initial capacity :  16 , fill ratio 0.75
+		- implements serializable and cloneable 
+		- condition : Cache application(LinkedHashMap)
+		
+	3> SortedSet 
+		- data structure : 
+		- dulpicate : 
+		- insertion order : 
+		- null insertion :
+		- heterogeneous : 
+		- initial capacity :  
+		- methods : first() , last() , headSet() < object , tailSet() >= object , subset(o1 , o2) >= o1 and <o2 , comparator()
+		
+		
+	4> TreeSet 
+		- data structure : Balanced Tree
+		- dulpicate : not allowed 
+		- insertion order : NOT preserverd(based on some sorting order)
+		- null insertion : possible (only once) for empty treeset at first 
+		- heterogeneous : not allowed
+		- initial capacity :  16 , fill ratio 0.75
+		- implements serializable and cloneable 
+		- condition : Cache application(LinkedHashMap)
+		- natural sorting order : must homogeneous and comparable
+		- stringBuffer not implement comparable interface
+		
+		
+8> Comaparable Interface 
+
+	- it has only one method compareTo(Object obj) , it is in java.lang package
+	- if we are using default natural sorting order jvm  internally used compareTo() method
+	- obj1.compareTo(obj2)
+		- obj1 comes before obj2  -ve
+		- obj1 comes after obj2  +ve
+		- obj1 and obj2 at same place 0
+		
+		
+9> Comaparator Interface
+
+	- it has two methods compare(obj 1 , obj2) and equals
+	- for customized sorting order
+	- object must be comparable
+	
+	-ve if (ob1 comes before obj 2)
+	+ve if (ob1 comes after obj2)
+	0 if both are at same place
+	
+	
+10> Map 
+
+	- both key and value are object
+	- key can not duplicate value can be
+	- each key value pair is one entry
+	
+	1> Entry Interface(inner interface of map)
+	
+	2> HashMap(1.2 v)
+		- datastructure : HashTable
+		- duplicate : key (not) value (yes)
+		- insertion order : not preserves based on hash code
+		- heterogenous : allowed both key and value
+		- null insertion : key(only once) , value (any number of time)
+		- use : search operation
+		- not synchronized  : Collections.synchronizedMap(Map m1)
+		- initial capacity : 16 (0.75)
+		
+	3> LinkedHashMap(1.4)
+		- data structure : hashtable , linkedlist
+		- insertion order preserved
+		- for cache application
+		
+	4> IdentityHashMap
+		- in hashmap jvm use .equal() method for duplication check (content comparision)
+		- in identity map jvm use == operator for duplication check (reference comparision)
+		
+	5> WeakHashMap
+		- in hashmap object is not eligible for garbage collection even if it doesnt have reference
+		- in weakhashmap object is eligible for garbage collection
+		
+		
+	7> sortedmap interface
+		- insertion in some spacific sorting order
+		- methos : firstKey() , lastKey() , headMap() , tailMap() , subMap() , comparator()
+		
+	8> TreeMap
+		- data structure : RED BLACK Tree
+		- duplicate : key (not) value (yes)
+		- insertion order : not preserves based on some sorting order
+		- heterogenous : allowed both key and value
+		- null insertion : key(only once first for empty ) , value (any number of time)
+		- use : search operation
+		- not synchronized  : Collections.synchronizedMap(Map m1)
+		- initial capacity : 16 (0.75)
+		- if natural sorting order object should be comparable and homogeneous
+		- own sorting order key homogeneous and can be non comparable value can be heterogeneous
+		
+	9> HashTable
+		- datastructure : HashTable
+		- duplicate : key (not) value (yes)
+		- insertion order : not preserves based on hash code
+		- heterogenous : allowed both key and value
+		- null insertion : not allowed
+		- use : search operation
+		- synchronized
+		- initial capacity : 11 (0.75)
+
+	10> Properties
+		- child class of hashtable
+		- do not need to compile and re run only re deployment is needed
+		
+		
+11> Collections:
+
+	- Collections.sort(List l1) : void     comaparble and homogeneous
+	- Collections.sort(List l1 , Comparator c1) : void
+	
+	- Collections.binarySearch(List l1 , Object obj) : int 
+	- Collections.binarySearch(List l1 , Object obj , Comparator c1)  : int

@@ -1,0 +1,16 @@
+1>  @NamedQuery(name = "User.findByEmailAddress", query = "select u from User u where u.emailAddress = ?1")
+	@NamedQueries(value = {
+                          @NamedQuery(name = "User.findByLastname", query = "select u from User u where u.lastname = ?1")
+						  }
+				 )
+				 
+2>  Inside Repository interface 
+
+	User findByEmailAddress(String emailAddress);
+	List < User > findByLastname(String lastname);
+	
+3>  Use it after autowired repository
+
+	userRepository.findByLastname("Fadatare");
+
+4> To use native sql query use @NamedNativeQuery

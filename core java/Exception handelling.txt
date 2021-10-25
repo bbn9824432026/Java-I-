@@ -1,0 +1,59 @@
+1> unwanted unexpected event that disturb normal flow of execution , provide alternative way to continue rest of the program normally
+2> default exception handelling : mthod creates exception object and handover to jvm 
+
+3> throwable -> exception and error
+
+4> checked exception : checked by compiler
+   unchecked exception : not checked by compiler Runtimeexception and Error and its child classes
+   : exception only occured at run time whether it is checked or not
+   
+   fully checked : class and its child class are checked
+   partially checked : class or its some class are not checked : Throwable and Exception
+   
+5> printStackTrace : name : desription : location
+   toString() : name : description
+   getMessege() : decription
+   
+6> try with multiple catch block : for each type of exception there should be separate catch block
+								 : order in catch block should be child to parent
+								 : exception already been caught
+								
+								
+7> finally : always executed , to cleanup code , try catch and finally have return statement finally return will be considered
+
+8> try : catch or finally
+   catch : compulsory try 
+   finally : compulsory try 
+   
+9> throw : for customized exception , manually handover exception object to jvm
+		 : can not write satement after throw (unreachable statement)
+		 : it must be throwable
+		 
+10> throws : to delegate responsibility to caller method
+		   : it must be throwable
+		   : to convince compiler
+		   : for checked exception
+		   
+		   
+11> try with resources : do not need to write finally block to close resource opened in try block
+						: try (r1 ; r2 k r3)
+						: resouce muslt implements autocloseable interface 
+						: network , database , io related classes implemnets autocloseable
+						
+12> multi catch block : for multiple catch block having same exception handelling code use multicatch block
+					 : catch (arithmatic exceptiom | classclastexception){
+							e.printstackTrace();
+						}
+					 : there should be no relation betweeen classes child to parent , parent to child or same type
+					 
+					 
+	how to enable method to throw exception
+	1. add throws in method signature and throw that exception in method body
+	
+		method() throws BadNumbderFormateException{
+		
+		 throw new BadNumbderFormateException();
+		
+		}
+		
+	

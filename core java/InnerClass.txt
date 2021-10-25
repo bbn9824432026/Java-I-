@@ -1,0 +1,219 @@
+1> Normal Inner Class
+
+class outer {
+
+	int x = 10;
+	int y = 20;
+	
+    class inner{
+  
+      // can not use static member in ineer class
+	  public void methodOne(){
+		sysout(x);
+		sysout(y);
+	 }
+    }
+  
+    Inner in = new Inner();
+  
+  
+    public void methodTwo(){
+  
+	in.methodOne
+	
+   }
+  
+  public static void main(String[] args){
+  
+	new Outer().new Inner().methodOne();
+  }
+
+}
+
+
+
+2> Method Local inner class............................................................
+
+	class outer{
+	
+		int x = 10;
+		static int y = 20;
+		
+		
+		public void methodOne(){
+		
+			int a = 10 ;
+			final int b = 20 ;
+			
+			class inner{
+			
+				public void methodTwo(){
+				
+					// if methodOne is static then only "y" variable we can use
+					// if not static than we can use both x and y
+			
+					// for local variable only final , abstract , strictfp we can use
+			
+					// inner class can be use withih this method only
+				
+				}
+			
+			}
+			
+			Inner in = new Inner();
+			in.methodTwo();
+		}
+	
+	}
+	
+	
+3> Anonymus inner class
+
+
+/// anonymus class that extends another class............................
+    class Popcorn{
+	
+		public void test(){
+			sysout("salty")
+		}
+	
+	}
+	
+	class test{
+	
+		public static void main(String [] args){
+		
+		   Popcorn pop = new Popcorn(){
+		   
+				public void test(){
+					methodOne();
+					sysout("spicy")
+				}
+			
+				public void methodOne(){
+					sysout("child Specific method");
+				}
+		  
+		   }
+		   
+		   pop.test(); // spicy and child specific method
+		   pop.methodOne(); // this can not use here 
+		   
+		   Popcorn pop1 = new Popcorn();
+		   pop1.test();   // salty
+		   
+		
+		
+		}
+	
+	
+	}
+
+
+/// anonymus class that implements interface.......................................
+
+	Runnable run = new Runnable(){
+	 
+		public run(){
+		 sysout("hello")
+		}
+	}
+	
+
+/// anonymus class define inside mwthod parameter.................................
+
+	new Thread(new Runnable(){ public void run(){sysout("called")}}).start();
+	
+	
+	
+	
+4> Nested static class
+
+	class Test{
+	
+	 static class Nested{
+	 
+		public void methodOne(){
+			sysout("hello");
+		}
+	 }
+	
+	}
+	
+	
+	Test.Nested obj = new Test.Nested();
+	obj.methodOne();
+	
+	
+5> Nesting Combination
+
+	// class inside class...............................................
+	  if class is closly associated with each other
+	  
+	// interface inside class........................................
+	   if multiple implementation required of same method
+	   class outer{
+		  interface inner{
+		     public void method();
+		  }
+		  
+		  class inner1 implements inner{
+				public void method(){
+					sysout(inner1 called)
+				}
+		  }
+	   
+	   }
+	   
+	// interface inside interface................................
+	
+		inetface outer{
+		
+			void methodOuter();.
+			
+			interface inner{
+				void methodInner();
+			}
+		
+		}
+		
+		class one implenets Outer.Inner{
+		
+			void methodInner(){
+				sysout("hello")
+			}
+		}
+		
+		class two implenets outer{
+		
+			void methodOuter(){
+				sysout("outer")
+			}
+		}
+		
+	// class inside interface........................................
+	
+	interface vehicle{
+		public int noOfWheeels();
+		
+		class DefaultVehicle implements Vehicle{
+		   public int noOfWheel(){
+			 return 3;
+		   }
+		}
+	
+	}
+	
+	class Bus implenets Vehicle{
+	
+	  public int noOfWheel(){
+	   return 8;
+	  }
+	}
+	
+	Vehicle.DefaultVehicle default = new Vehicle.DefaultVehicle();
+	default.noOfWheeels();
+	
+	Vehicle vehicle = new Bus();
+	vehicle.noOfWheeels();
+	

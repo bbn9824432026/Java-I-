@@ -1,0 +1,77 @@
+Bean Definition: Bean is a Software Reusable Component, it is a normal java class
+contains properties and the corresponding setXXX(-) and getXXX() methods and which
+are created and managed by IOC Container in Spring Framework.
+
+
+a) Bean classes must be POJO classes, they must not extend or implement any
+predefined Library except java.io.Serializable marker interface.
+
+b) Bean must be declared as "public" , "Non-abstract" and "non-final"
+
+
+
+1> xml configuration 
+
+	<beans>
+
+     <bean id="--" name="--" class="--" scope="--">
+     <property name="--" value="--"/>
+
+     </bean>
+
+    </beans>
+	
+	class : fully qualified class name
+	property : class variable use setter method 
+	id: exactly one identity
+	name  : multiple identity , as delimiter space , "," ,";"
+	scope : singletone : for each bean defination it will create single object
+			prototype : for each call from context it will create new object
+			requestScope : not in standalone , separate bean object for each request object
+			sessionScope : new object for each new session object
+			globalSessionScope : new object for each and every portlet sesssion
+			applicationScope ; new object for each and every servlet context object
+			webSocketScope : new object for single websocket life cycle
+	
+	
+	
+2> java based configuration 
+
+	@Configuration class
+	@Bean method
+	
+	
+3> Bean lifecycle IOC container manage it
+
+	1. Bean class loading : Class.forName()
+	2. Bean instantiation : create object
+		By construcctor : need 0 arg constructor
+		By static factory method : class should have static method and configure it in configuration file  factory-method="getInstance"
+		By instance factory method : separate class have method factory-bean="factory" factory-method=""
+	3. Bean initialization and bean desctruction
+		1> custom initialization and destruction method
+		 init-method="init" destry-method="destroy"
+		2>initializingBean and desposableBean callback interface
+		 implements initializaingBean , disposableBean
+		 override afterPropertySet() , destroy()
+		3> @PostConstruct and @PreDestroy
+		
+		initializing order 3 -> 2-> 1
+		
+		all bean have common post construct and predestry method than we can define it in beans tag
+		default-init-method   default-destroy-method
+		
+		
+4> Bean inheritance
+
+
+
+5> Bean post processor 
+
+  implement BeanPostProcessor
+  1.public void postProcessBeforeInitialization(Object bean, String name) throws BeansException
+	This method will be executed just before performing bean initialization and  immediatly after bean instantiation, that is, before executing init() method if we provide
+    custom initialization method init().
+	
+  2. . public void postProcessAfterInitialization(Object bean, String name) throws BeansException
+    This method will be executed immediatly after performing beans initialization, that is, after executing init() method if we provide custom initialization method init().

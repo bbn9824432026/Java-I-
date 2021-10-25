@@ -1,0 +1,13 @@
+1> what is interface?
+2> what interface contains ? 5
+3> what is default method ?
+4> Difference between static method and default method in interface?
+5> class can extends class and implement interface at the same type?
+6> can we define nested class in interface ? how ?
+7> access specifier for interface ?
+8> can class implements multiple interface at same time?
+9> can interface extends another interface ?
+10> multiple inheritance in interface?  class implements multiple inerface and interface extends multiple interface.
+11> how to add new functionality to interface?
+12> what is nested interface?
+

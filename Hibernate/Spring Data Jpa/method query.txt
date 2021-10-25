@@ -1,0 +1,33 @@
+spring data jpa
+
+1> create query from method names
+
+1> String::::
+	findBy_And_(Stiring s1 , String s2);
+	findBy_or_(String s1 , String s2);
+	findBy_Like(String s1)
+	findBy_NotLike(String s1)
+	findBy_StartingWith(string s1)
+	findBy_EndingWith (string s1)
+	findBy_Conatining(atring s1)
+	findBy_IgnoreCase(string s1);
+	
+	
+	
+2> Integer ::
+
+	findBy_LessThan(int i1)
+	findBy_LessThanEqual(int i1)
+	findBy_GreaterThan(int i1)
+	findBy_GreaterThanEqual(int i1)
+	findBy_OrderBy_Desc/asc
+	
+3> Date 
+
+	findBy_Between(date 1 , date 2)
+	findBy_After(date 1)
+	findBy_Before(date 1)
+
+4> Collection
+	findBy_In(collection)
+	findBy_NotIn(collection)

@@ -1,0 +1,95 @@
+1> Object Class
+	
+	1> toString() : for string representation of an object
+				  : if we are not override toString() object class method will be called
+					getClass().getName()+@+Integer.toHexString(hexCode())
+					
+					
+	2> Hashcode() : for every object jvm create specific number which is called hascode
+				  : all hasing related algorithm use this method like hashtable , hashmap , hashset
+				  : if we are not overriding hashCode() it generate hashcode based on address of object
+				  : it doesnt mean hascode represent address of an object.
+				  : we can create our own implementation
+				  
+				  
+	3> .equals()  : for reference comparision (if both reference point to same object)
+				  : for content comparision we have to override equals()
+				  : if both are different object it returns false, have to handel classcast exception to return false
+				  : if object is null it returns false , for overrided method we have to handel null pointer exception to return false;
+				  : in String , wrapper classes , and collection classes equals method override for content comparison
+				  : == true than equals() true
+					== false than can not conclude about equals()
+					equals() true can not conclude about ==
+					equals() false than == false
+				  : r1.equals(r2) true than r1.hasCode()==r2.hascode();
+					r1.eqluals(r2) false than can not conclude
+					r1.hascode() = r2.hascode() than can not conclude
+					r1.hascode() != r2.hascode() than r1.equals(r2) return false
+					
+				  
+	4> clone() : to create exact duplicate copy of an object 
+			   : to clone object , object must be cloneable , class should implement cloneable interface , marker interface , ability provide by jvm
+			   : Clonenotsupported exception
+			   : shallow cloning : creating bit wise copy of an object
+								 : for primitive variable it creates exact copy in clone object
+								 : for reference variable it will not create new object in clone object it copy refence variable point to old object contained in main object
+								 : any changes done in main object directly reflacted in cone object
+			   : deep cloneing : if we want to create independent copy of object should go for deep cloning
+							   : in deep cloning for reference variable new object will be created in clone object
+							   : for deep cloning we have to override colne method
+							      clone(){
+								     cat c1 = new Cat(c.y)
+									 Dog dog = new Dog(c1 , z)
+								  }
+								  
+	5> getClass() : gives run time class defination of an object
+	
+	
+	6> finalize() : just before destroying object GC called this method for clean up activity
+	
+	
+	
+2> String class.............................................................................
+	
+	1> Once string object created if make any changes it creates new object it is immutable String buffer is mutable
+	2> in string class equals() is for content comparision in string buffer it is for reference comparision
+	3> Sring s1 = new String("bipin") two object willl be created in SCP and heap s1 point to heap , String s2 ="bipin" object create in SCP s2 point to that
+	4> SCP not having two object having same content
+	5> In SCP even if object has no reference it is not eligible for GC
+	6> Variable in SCP only destroy during jvm shutdown
+	
+	7> if we want SCP object of corresponding heap reference we can use intern() method. If we do not have object in SCP it creates it and return
+	8> String("") , String(StringBuffer) , String(Char[]) , String(Byte[])
+	
+	
+3> StringBuffer
+	
+	1> if value of string changes frequently we should go for stringbuffer
+	2> every new changes perform on same object with change no new object will be created
+	3> all methods are synchronized
+	
+4> StringBuilder
+
+	1> all methods are nonsunchronized
+	
+5> wrapper classes 
+
+	1> it wrap all premitive to form it as object. to handel primitive as object
+	2> to use utility function on primitive
+	3> toString() method returns its content
+	4> equals() content comparision
+	5> all class have constructor accepting string except char
+
+6> utility method
+	
+	1> valueOf : to create wrapper from String/primitive
+	2> XXXValue() : convert wrapper object to primitive IntegerValue() , ByteValue() , Floatvalue()
+	3> parseXXX() : all wrapper class contains this method except char to convert string to primitive
+	3> toString() : to convert wrapper object / primitive to string
+				  : Int and Long class have this methods : toBinaryString() , toOctalString() , toHexaDecimalString()
+				  
+7> AutoBoxing and AutoUnboxing : till 1.4 we can not use wrapper object in place of premitive and vice versa
+							   : autoboxing : conversion from premitive to wrapper Interger i = 10; after compilation Integer i = new Integer(10);
+							   : autounboxing : conversion from wrapper to primitive : Integer i = new Integer(10); after compilation int i = i.IntValue();
+											  : in unboxing if we are giving null reference it will throw null pointer exception
+							

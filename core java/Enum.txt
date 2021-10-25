@@ -1,0 +1,33 @@
+1> To define group of named constant
+	
+	enum Month { JAN ,FEB , MARCH}
+	
+	1> constant is reference variable to that enum type object
+	2> every constant are public static and final and object of that enum class
+	3> toString() method returns constant
+	
+		Month m1 = Month.JAN;
+		
+		
+2> can define enum outside class and inside class not inside method
+
+	outside class : public , default , strictfp
+	inside class : public , private , protected , static , default , strictfp
+	
+3> enum and inheritance 
+
+	enum is child class of java.lang.Enum  so it can not extends any other class
+	enum class is by default final so we can not create child of enum
+	we can implement any number of interface
+	
+4> java.lang.Enum :
+
+	values() :Month[] month =  Month.values();
+	ordinal() : for(Month m1 : month){m1.ordinal()}
+	
+	
+5> in enum we can declare normal variable , method , constructor , main mehtod
+	if we decalre any method first line should be constant and ends with semicolen;
+	if we declare ny method enum should have atleast one constant
+	
+	

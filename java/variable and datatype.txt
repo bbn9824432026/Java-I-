@@ -1,0 +1,20 @@
+1> Types of variable?
+2> what is variable?
+3> what is instance variable? where to declare?
+4> what is static variable? where to declare? it is innitialized only once.
+5> what is local varible? where to declare?
+
+6> type of data type?
+7> name 8 primitive datatype?
+8> 8 data type ? range? size ? default value?
+
+
+9> Type conversion and type casting?
+
+10> literal assign to integer? hexadecimal(ox), octal(0) , binary(0b) , decimal , long(L) ,_(1.7) dont use inbegging and ending
+
+11> literal assign to string? unicode , string , escape characetr
+
+12> literal assign to boolean? true , false
+
+13> literal assign to char? single character in '' , 'a' ,'3' , '#' 

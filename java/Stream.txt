@@ -1,0 +1,155 @@
+1> Create Stream :
+
+	1> Stream<String> myStream = Stream.empty();
+	2> Stream<String> collection = list.stream(); List<String> list
+	3> Stream<String> array = Stream.of("bipin","bipoin");
+	   Stream<String> array = Stream.of(array , "Bipin");
+	4> Stream<String> streamBuilder = Stream.<String>builder().add("bipin").add("bipin").build();
+	5> Stream<String> strea,Generate = Stream.generate(() -> "bipin").limit(10);
+	6> Stream<Integer> streamIterate = Stream.iterate.(1 , n -> n+2).limit(5);
+	7> IntStream intStream = IntStream.range(1 , 3);
+	   LongStream longStream  = LongStream.rangeClosed(1, 3);
+	   Random random = new Random();
+       DoubleStream doubleStream = random.doubles(3);
+	   
+
+2> filter(): it takes predicate as argument, forEach()
+
+	collection.stream().(("string") -> string.length > 50 ).collect(Collectors.toList());
+	
+	collection.forEach(System.out::println());
+	
+3> filter(): 
+	
+	Stream<String> resultString = stream.filter( stringvar -> stringvar.length > 5);
+
+4> map() :
+
+	Stream<String>  sreamMapped = stream.map( stringVar -> stringVar.upperCase());
+
+5> flatMap() : must have terminal operation at the end
+ 
+   stream.flatMap(stringVar -> {
+					List<String> split = stringVar.split("");
+					return (Stream(String))Arrays.asList(split).stream();
+				}).forEach((value) -> Syetem.out.println(value));
+				
+6> distinct() :
+
+   List<String> streamDistinct = stream.distinct().collect(Collectors.toList());
+   
+7> limit() :
+
+	stream.limit(2).forEach( element -> sysout(element));
+	
+8> peek() ; it takes consumer as parameter
+ 
+   stream.peek(value -> sysout(value));
+   
+   
+9> anyMatch() : takes predicate as argument
+
+	boolean anyMatch = stream.anyMatch(stringVar -> stringvar.length > 5);
+
+10> allMatch() :
+
+   boolean allMatch = stream.allMatch( stringVar -> stringvar.length > 5);
+   
+11> noneMatch() :
+
+	//
+
+12> collect():
+
+	collection.stream().(("string") -> string.length > 50 ).collect(Collectors.toList());
+	
+13> count():
+
+
+14> findAny():
+
+	Optional<String> anyElement = stream.findAny();
+
+15> findFirst() :
+
+	Optional<String> result = stream.findFirst();
+
+16> forEach():
+	
+	stream.forEach( element -> { System.out.println(element); });
+
+17> min() :
+
+	Optional<String> min = stream.min((val1, val2) -> { return val1.compareTo(val2); });
+
+18> max() :
+ 
+	Optional<String> max = stream.max((val1, val2) -> {  return val1.compareTo(val2); });
+	
+19> reduce() :
+
+	Optional<String> reduced = stream.reduce((value, combinedValue) -> { return combinedValue + " + " + value; });
+	
+20> toArray() :
+
+	Object[] objects = stream.toArray();
+	
+21> concate() :
+
+	Stream<String> concatStream = Stream.concat(stream1, stream2);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+Summary:::::::
+1> ways to create stream?
+2> non terminal element?
+3> terminal element?
+
+Function<T , R> function = T -> {operation on t ; return R;}  function.apply(T);
+Predicate<T> predicate = T -> {operation on t; return boolean;} prediacte.test(T);
+Consumer<T> consumer = T -> {operation on t; return void;} consumer.accept(T);
+Supplier<T> supplier = () -> {some operation ; return of type T;} supplier.get();
+
+BiFunction<T,U,R> bifunction = (T, U) -> {operration on T and U ; return of type R ;}  biFunction.apply(T , U);
+BiPrediacte<T,U> biPredicate = (T , U) -> { operation on T and U ; return boolean;}  biPredicate.test(T , U);
+BiConsumer<T , U> biconsumer = (T ,U) -> {operation on T and U; return void;} biConsumer.accept(T, U);
+
+
+create stream::
+
+Stream.empty();
+Stream.of(array ,"Bipin");
+Stream.generate(supplier).limit(10);
+Stream.(T)builder.add(T).add(T).build();
+Stream.iterate(1,n->n+2).limit(5);
+collection.stream();
+
+Return Stream
+stream.filter(predicate);
+stream.map(Function);
+stream.flatMap()
+stream.distinct()
+stream.limit(2)
+stream.peek()
+
+stream.anyMatch(prediicate)
+stream.allMatch(predicate)
+stream.noneMatch(predicate)
+stream.collect(Collectors.toList())
+stream.count();
+stream.findAny();
+stream.findFirst();
+stream.forEach(consumer);
+stream.min((v1,v2)->return compareTo on this)
+stream.max((v1,v2) -> return compareto on this)
+stream.reduce()
+stream.toArray()
+stream.concate(stream1,stream2)
+
+
