@@ -1,0 +1,148 @@
+"org.springframework.validation.Validator" .
+
+1.Prepare a properties file with all validation messages:	.
+
+	error.uname= User Name is required.
+	error.password=User Password is required.
+	
+2.Prepare Validator class:
+
+	The main intention of Validator class is to define all data validation logic w.r.t the bean
+	properties.
+	Steps:
+		a)Declare an user defined class.
+		b)Implement org.springframework.validation.Validator interface.
+		c)Implement the following Validator interface provided methods.
+			public boolean supports(Class type)
+			public void validate(Object obj, Errors errors)
+			Where supports(--) method will check whether the Bean object is supporting data
+			validations or not.
+			Where validate(---) is able to include data validation logic inorder to perform data
+			validations.
+			Where "Errors" is able to include all validation messages in the form of Map object
+			inorder to display. To add an error message to Errors object we have to use
+			"rejectValue(----)" method.
+		d)Declare Resource property and its setXXX() method inorder to repersent the name
+			and location of the properties file where all the validation messages are existed.
+			
+			
+3.Configure Validator class in spring configuration file:
+		In spring configuration file, we have to configure Validator class as a bean with
+		Resource property.
+		
+4.In test application get all validation messages from MapBindingResults
+	object[Errors] by using getAllErrors() method.
+	
+	
+package com.durgasoft.beans;
+public class Employee {
+ private String eid;
+ private String ename;
+ private float esal;
+ private int eage;
+ private String eemail;
+ private String emobile;
+setXXX() and getXXX()
+
+ public void getEmpDetails(){
+ System.out.println("Employee Details");
+ System.out.println("-----------------------");
+ System.out.println("Employee Id :"+eid);
+ System.out.println("Employee Name :"+ename);
+ System.out.println("Employee Salary :"+esal);
+ System.out.println("Employee Email :"+eemail);
+ System.out.println("Employee Mobile :"+emobile);
+ }
+
+}
+
+
+messages.properties
+error.eid.empty=Employee Id is required.
+error.eid.invalid=Invalid Employee Id.
+error.ename.empty=Employee Name is required.
+error.esal.invalid=Employee Salary is Invalid.
+error.eage.minage=Employee Age must not be less than 18 years.
+error.eage.maxage=Employee Age must not be greater than 30 years.
+error.eemail.empty=Employee Email Id is required.
+error.eemail.invalid=Employee Email Id is Invalid.
+error.emobile.empty=Employee Mobile is required.
+error.emobile.invalid=Employee Mobile is Invalid.
+
+
+
+public class EmployeeValidator implements Validator{
+private Resource resource;
+public void setResource(Resource resource){
+this.resource=resource;
+}
+@Override
+public boolean supports(Class type) {
+System.out.println("Hello");
+return Employee.class.equals(type);
+}
+@Override
+public void validate(Object obj, Errors errors) {
+try {
+System.out.println("Hello...validate()");
+Properties prop = PropertiesLoaderUtils.loadProperties(resource);
+Employee emp=(Employee)obj;
+if(emp.getEid() == null || emp.getEid() == ""){
+errors.rejectValue("eid", "error.eid.empty", prop.getProperty("error.eid.empty"));
+}else{
+if(!emp.getEid().startsWith("DSS-")){
+errors.rejectValue("eid", "error.eid.invalid", prop.getProperty("error.eid.invalid"));
+}
+}
+if(emp.getEname() == null || emp.getEname() == ""){
+errors.rejectValue("ename", "error.ename.empty",
+prop.getProperty("error.ename.empty"));
+}
+if(emp.getEsal() <= 0.0f ){
+errors.rejectValue("esal","error.esal.invalid", prop.getProperty("error.esal.invalid")); }
+if(emp.getEage() < 18 ){
+errors.rejectValue("eage", "error.eage.minage",
+prop.getProperty("error.eage.minage")); }else if(emp.getEage() > 30
+){errors.rejectValue("eage", "error.eage.maxage",
+prop.getProperty("error.eage.maxage"));
+}
+if(emp.getEemail() == null || emp.getEemail() == ""){
+errors.rejectValue("eemail","error.eemail.empty",prop.getProperty("error.eemail.empt
+y"));
+}else{
+if(!emp.getEemail().endsWith("@durgasoft.com")){
+errors.rejectValue("eemail", "error.eemail.invalid",
+prop.getProperty("error.eemail.invalid"));
+}
+}
+if(emp.getEmobile() == null || emp.getEmobile() == ""){
+errors.rejectValue("emobile", "error.emobile.empty",
+prop.getProperty("error.emobile.empty"));
+}else{
+if(!emp.getEmobile().startsWith("91-")){
+errors.rejectValue("emobile", "error.emobile.invalid",
+prop.getProperty("error.emobile.invalid"));
+}
+}
+} catch (Exception e) {
+e.printStackTrace();
+}
+}
+}
+
+
+
+<beans>
+<bean id="emp" class="com.durgasoft.beans.Employee">
+<property name="eid" value=""/>
+<property name="ename" value=""/>
+ <property name="esal" value=""/>
+ <property name="eage" value=""/>
+ <property name="eemail" value=""/>
+ <property name="emobile" value=""/>
+ </bean>
+ <bean id="empValidator" class="com.durgasoft.validations.EmployeeValidator">
+ <property name="resource"
+value="/com/durgasoft/resources/messages.properties"/>
+ </bean>
+</beans>
