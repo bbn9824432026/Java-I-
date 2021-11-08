@@ -1,0 +1,46 @@
+--------Object Inside DoM-----------------
+1> window
+
+	location.href
+	navigator.userAgent : name of current browser
+	navigator.screenX
+	navigator.screenY
+	alert()
+	confirm() : dialogue box with yes and no true if user press yes and false for cancel
+	print()
+	setTimeOut(function , millisecond) : call the function after specified time
+	setInterval(function , millisecond)
+	scrollTo(x , y)
+	open(url , "logical name" , "width=100 , height=pixel")
+	
+	
+2>Document
+
+	title , head , body , images , links , URL
+	write()
+	getElementById("Id") : array of matched element
+	getElementByName("Name") : array of matched element
+	getElementByTagName("P") : array of matched element
+	getElementByClassName("") : array of matched element
+	querySelectorAll("") tagName , #ID , .class , tag1,tag2... , 
+	querySelector("seletor") : give first element matched with selector
+	
+	
+3> element
+
+	tagName
+	id
+	innerHtml    , innerHtml="hai"
+	innerText : content without tag1
+	style : style.property == to apply and get css
+	parentElement
+	childern
+	scrollTop()
+	setAttribute("attribute name" , "value") : set attribute to tag1
+	getAttribute("attribute name")
+	removeAttribute("attribute name")
+	attributes() all the attribute with name and value a[0].name a[0].value
+	focus() places cursor inside element
+	click()
+	remove() : removes current element
+	document.createElement("P")

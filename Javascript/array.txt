@@ -1,0 +1,7 @@
+Create Array 					: var strArray = ["b1" , "B2"];
+set value 						: strArray[index] = value;
+get value 						: strArray[index]
+get size 						: strArray.length
+add new element to array 		: strArray.push(new value)
+remomve existing value 			: strArray.splice(index , no Of element to remove)
+insert new element in middel    : strArray.splice(index , 0 , new value)

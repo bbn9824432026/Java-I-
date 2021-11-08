@@ -1,0 +1,232 @@
+Servlets:-- These are used to develop Dynamic web application also supported static web
+applications.
+
+-->This API is provided in 2 Package
+	a>javax.Servlet [Package]
+	b>javax.Servlet.http [Package]
+
+
+	Example:--
+	1>using Servlet Interface:--
+	class MyServlet implements Servlet
+	{
+	}
+
+	2>Using Generic Servlet:--
+	class MyServlet extends GenericServlet
+	{
+	}
+
+	3>Using HttpServlet abstract class:--
+	class MyServlet extends HttpServlet
+	{
+	}
+	
+	
+--> web server creates object to Servlet classes and calls 3 methods
+		i>init():--It will be called only once after creating object by server.
+		ii>service():-- It will be called for every request made by browser.
+		iii>destroy():-- It will be called only once before deleting (destroying) object by server.
+		
+		
+		
+Web Server Execution Steps:--
+	1>It will take Servlet class(.class) file as input and creates Object to it using default
+		constructor.
+		=>If programmer has written no constructor in servlet then Java compiler provides
+		  default constructor.
+	2>After object created successfully then Server calls init() method. Programmer can
+		provide input to this method.[ Using web.xml code].
+	3>For every request made by browser, server call service() method defined in class[Like
+		servletClassObj.service()] It returns output as response to client.
+	4>Before stopping server destroy() method will be called as server.
+	5>finally servlet class object is removed [destroyed] from server.
+	
+	
+	
+2>web.xml***:-- It is also called as Deployment Descriptor File.
+	=>It is input to web server.
+	=>If servlet class is written then web server will not creates object. If class configured in
+		web.xml then only web container creates object.
+	=>web.xml root tag is <web-app>
+	=>For one servlet class, Format is:
+	<servlet>
+		<servlet-name> </servlet-name>
+		<servlet-class> </serrvlet-class>
+	</servlet>
+	=>meaning of above code is, web container creates object using above class and name.
+
+	<servlet-mapping>
+		<servlet-name> </servlet-name>
+		<url-pattern> </url-pattern>
+	</servlet-mapping>
+	
+	
+	
+***Service() method parameters:--
+	=>service() is a one of life cycle method defined in Servlet API. It will be called by server
+		when browser makes request(URL).
+	=>Along with request, browser can also send data in any format that will be copied to
+		ServletRequest object, created by WebContainer object also called by Container.
+	=>service() method reads input data from ServletRequest and final output data will be
+		copied to ServletResponse.
+	=>When browser makes request, then server creates one ServletRequest object and one
+		ServletResponse Object.
+	=>Once Response is provided by server to browser, then Server destroy the
+		ServletRequest and ServletResponse objs.
+	=>*** ServletRequest behaves like input to service() method and ServletResponse
+		behaves like output of service() method.
+		
+		
+--> a>Query Parameters:--
+
+	URL?Key=Value&Key=Value…
+	
+	Ex:-- http://localhost:8080/App/welcome?sid=10&sname=AA&sfee=3.2
+	
+	String value = request.getParameter(“key”);
+	
+	
+	
+--> Format of those methods:--
+		1>init() method:-- Public void init(ServletConfig config) throws ServletException.
+		2>service():-- public void service(ServletRequest req, ServletResponse res) throws
+			ServletException IOException
+		3>destroy():-- public void destroy();
+	
+	
+--> lazy loading : on request it will create servlet object and call init method
+	Eager loading: <load-on-startup>10</load-on-startup> in servlet tag
+				 : on application loading it will create servlet object and call init method
+				 
+				 
+				 
+---> 1>ServletConfig:-- It is created for every Servlet class, one config object cannot be
+			accessed by other servlet obj. [we can compare like instance variable].
+	 2>ServletContext:-- It is a common memory created for all Servlets objects
+	 
+	 
+NOTE:--
+	=>Both are temporary Memories.
+	=>Both holds data in key =value format.
+	=>By default key, value is string types.
+	=>By using ServletConfig we can get ServletContext memory link (because for all config
+		only one context).
+	=>But using ServletContext we cannot get ServletConfig memory (there are multiple
+		config memories exist).
+	=>Config memory exist if servlet object is exist, context memory exist even server has
+		zero servlet objects.
+		
+		
+		
+ServletConfig:--
+=>It is a memory holds data in key=value format, It is used to pass input data to initmethod mainly.
+=>in web.xml file under <servlet> tag write code like,
+ <init-param>
+ <param-name>mydata</param-name>
+ <param-value>Hello</param-value>
+ </init-param>
+=>Then server created objects with data like.
+
+	public void init(ServletConfig config)throws ServletException
+	{
+		String val =config.getInitParameter("Mydata");
+		System.out.println("From init method call : " +val);
+	}
+
+
+ServletContext:-- It is also called as global memory for all Servlets.
+	=>It will store data in key = value format both are type String only.
+	=>To get ServletContext object code is:
+	--->In init() method :using config
+		ServletContext sc = config.getServletContext();
+	=>in service() method : using request
+	ServletContext sc =req.getServletContext();
+	****)To store data globally using web.xml
+	Syntax is:--
+		<contex-param>
+			<param-name>key</param-name>
+			<param-value>val</param-value>
+		</context-param>
+	***)To read this, syntax is:--
+	String val=sc.getInitParammeter(“key”);
+	
+	
+	
+
+=>HttpServlet has 7 HTTP methods, follows Syntax
+doXXX(HttpServletRequest, HttpServletResponse)
+Those are:-- doGet(GET), doPost(POST), doPut(PUT), doDelete(DELETE), doGHead(HEAD),
+doTrace(TRACE), doOptions(OPTIONS).
+=>Here browser supports only GET and POST operations.
+=>For every task one doXXX() method is used. For example every doXXX method is
+compared with basic operations, then
+1>doGet()==>Get the data from Server.+
+2>doPort()==>Create (new) data in server
+3>doPut()==>modify (alter) data in server
+4>doDelete()==>remove data in server
+5>doHead()==>Execute work in server and return “No response Body”
+6>doTrace()==>Find location of data in server.
+7>doOptions()==>Get multiple options of data in server.
+=>When browser made request, then execution flow at server side is 
+
+
+
+StringBuffer url =req.getRequestURL();
+String uri =req.getRequestURI();
+String qs = req.getQueryString();
+String projName = req.getContextPath();
+
+
+ContentType:-- Here Content means data this option is used to provide “What type of
+	data is provided by a servlet as a Response”.
+	=>In simple “Response has what data?” Text Data?, Image Data?, PDF Data?, Excel Data?,
+		Audio Data?, etc…
+	=>Every Response should better have Content Type. It follows format: “type/subtype”
+		Few examples are:--
+		text/thml, text/xml, image/jpg, imagepng, image/gif, application/pdf (PDF),
+		application/vnd.ms-excel (EXCEL), audio/mp3, audio/mpeg, audio/wav, 
+		video/webm, video/mp4, application/javascript,
+		application/ etc…
+		
+		Basic Example: contentType--
+		Use code response.setContentType(“---“) to set the type.
+
+
+
+Servlet Redirect:--
+=>When ever request is made by browser it will goto one servlet here this servlet only
+provides response.
+=>Instead of this if we want to execute another servlet or another application service
+then we should re direct from our servlet to another servlet or another application by
+using bellow code
+response.sendRedirect(“/url”);
+
+
+
+
+RequestDispatcher (Servlet Communication):--
+	=>RequestDispatcher is used to navigate from one servlet(or JSP) to another servlet(or
+		JSP) within same application (and same server)
+	=>It will not work between two Apps or two different servers.
+
+Types of Dispatching:--
+
+	a>forward:-- If request made to Servlet#1 then it can send to Servlet#2 and Servlet#2
+		finally gives response.
+		=>servlet#2 can read servlet#1 request data
+		=>It is one directional (forward) only not backward.
+	b>include:-- Current servlet can goto another servlet, execute that and get response
+		back to our servlet.
+	=>Bi-Directional possible. It should also carry Data from one servlet to another servlet
+	
+	
+	RequestDispatcher dispatcher = request.getReuestDispatcher(“/url”);
+	dispatcher.forward(request, response); Or dispatcher.include(request, response);
+	
+	
+	Data Sharing between Servlets using Request Dispatcher:--
+	
+	Method used are:--
+		setAttribute(key, value);
+		getAttribute(key) : value

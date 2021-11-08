@@ -1,0 +1,90 @@
+Creating Object 
+
+	1> Object Literals : property with key value with : separated by ,
+	
+		var stu = {studentId : 1 , studentName : "Bipin" , studentMarks : 80 , result : function(){
+					
+					if(this.studentMarks>35){
+						return "Pass"
+					}else{
+						return "fail"
+					}
+		
+				   }} 
+				   
+	2> Constructor
+	
+	
+		function Student(a , b , c)
+		{
+			this.studentId = a ;
+			this.studentName = b;
+			this.studentMarks = c;
+			this.result= function()
+						 {
+						   if(this.studentMarks > 35){
+							return "pass";
+						   }else{
+						    return "fail";
+						   }
+						 }
+		}
+		
+		
+		Student student = new Student(1 , "Bipin" , 80);
+		studnet.result;
+		
+		
+Object.keys : it gives all the property of object in array form
+
+	
+		var stuProperties = Object.keys(student);
+		
+		
+JSON.stringify(refrence variable) : to convert object literals in json formate
+
+	    var str = JSON.stringify(stu);
+	
+	
+JSON.parse(json string) : to convert json to object literals
+
+        var stu = JSON.parse(json string);
+		
+		
+Object array literals : array of object literals
+
+	var Students = [
+					{property : value , property : value},
+					{property : value , property : value};
+					......
+				   ]
+				   
+				   
+Object Array : array of constructor function object
+
+	
+	var Students = [
+						 new ConstruvtorFunction(a , b , c),
+						 new ConstruvtorFunction(c , d, e),
+						 .......
+				   ]
+				   
+				   
+prototype : all constructor function has propert prototype
+			propert added to object as prototype will be available to all object created by that constructor funtion
+			
+			
+			function Student(a , b){
+				this.studentId = a;
+				this.studentName = b;
+			
+			}
+			
+			Student.prototype.marks= 80;
+			Student.prototype.result = function(){
+			  if(this.marks >35){
+				rteturn "pass";
+			  }else{
+				return "fail";
+			  }
+			}

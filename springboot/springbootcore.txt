@@ -1,0 +1,5 @@
+1. springboot runner
+
+--> it is autoexecutable component which is called by container at application startup.
+--> it will execute only once
+

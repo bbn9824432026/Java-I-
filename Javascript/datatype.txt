@@ -1,0 +1,94 @@
+Number 
+string
+boolean
+undefined -> 
+object -> {} , new
+function
+
+
+
+typeof value --> typeof 10
+
+
+
+undefined = represent emplty value , is assign to every uninitialized variable
+		  = cannot assign by developer , its datatype is "undefined"  
+
+null = can be assign by developer , its datatype is object
+
+
+== -> checks only value
+=== -> checks value and datatype
+
+
+
+String(number value) -> String() is predefined dunction to convert number into string
+
+toString(); -> to convert number into string, it is defined to number datatype
+numberValue.toString();
+
+Number(String value) : NaN if string is alphanumeric or alphabatic
+					 : 0 id strign is emplty or space
+					 : data type of NaN is number
+					 
+					 
+parseInt(String value) : NaN if empty
+					   : NaN if it is alphanumeric start with alphabate
+					   : Not applicable for decimal 10.26 -> 10
+					   : NaN for alphabatic
+					   : Number for alphanumeric start with number 10av -> 10
+					   
+parseFloat(String value) : same as parseInt plus it support decimal places
+
++ Unary operator : convert string to number but it only support to number
+	var a = "10.5";
+	var b = +a;
+	
+	
+toFixed() = converts number to strign and add specified decimal places
+
+	number.toFixed(5)
+	
+	
+	
+	
+	
+	
+----------------------String Functions--------------------------
+
+string.toUpperCase();
+string.toLowerCase();
+string.length;
+string.charAt(index)
+string.charCodeAt(index) : it returns ascii value
+string.substr(index , length);
+string.indexOf(subString) : index of starting char of sub string in string , returns -1 if it is not found
+string.replace("old word" , "new word")
+string.split("separater character") -> "How are you".split(" ") array of string
+string.trim() -> remove unnecessary space form right and left
+string.concat("another string")
+
+
+--------------------Date Function----------------------------------
+
+
+new Date()
+date.toLocaleDateString() -> return in form of M/d/yyyy
+date.toLocaleTimeString() -> hh/m/s AM/PM
+date.getTime() -> return milli secoond since 1/1/1970 12.00 AM/PM
+date.getDay() -> no of day of the week
+date.getDate() -> returns only date -> 10
+date.getMonth() -> retruns only months -. 1-12
+date.getYear() -> returns year
+date.getHours()
+date.getMinutes()
+date.getSeconds()
+date.getMilliseconds()
+
+Date customDate = new Date();
+cd.setFullYears(1994)
+cd.setMonth(10) 0-11
+cd.setDate(24)
+
+
+

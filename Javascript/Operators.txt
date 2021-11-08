@@ -1,0 +1,26 @@
+1> Arithmatic Operators
+
+	+ , - , * , / , %
+	
+2> Assignment Opereators
+
+	= , += , -= , *= , /= , %=
+	
+3> Increment Decrement Operators
+
+	++(+= 1) , --(-= 1)
+	
+4> Relational Operator 
+
+	== , ! , < , > , <= , >=
+	
+5>	Logical Operator 
+
+	&& , ||  , !
+	
+6> Concatination Operator 
+
+	number + number = addition
+	number + string = string
+	string + string = string
+	string + number = string
