@@ -1,0 +1,96 @@
+1>selective
+2>iterative 
+3>transfer
+
+
+1> if(boolean){
+	
+   }else{
+	
+   }
+
+   : curly barces and else part is optional
+   : only one statement we can write without curly braces after if
+
+2> switch(byte,short, char , int(1.4) , Byte , short , char , Ineteger(1.5) , enum){
+    case 1 : action ; break;
+    case 2: action ; break;
+    default : action;
+    }
+
+    : independent statement not allowed
+    : case lable should be compile time constant int y =10 ; case y(invalid) if final 
+      it is valid
+    : switch argument can be expression and class label should be constant expression
+    : case label should be with in  switch argument range
+    : duplicate case labels are not allowed
+
+
+
+
+1> while(boolean){
+       // statements
+     }
+
+     : if we dont know no of iteration
+
+2> do{
+      int x = 10 ; should not declarative without curly braces
+     }while(boolean){
+
+     }
+
+     : if we want to execute loop body at least once without condition chacking
+
+3>for loop : innitialization  : int a=0,b=0
+                                : can take any java statement including sop
+                                : execute only once
+
+             : condition checking : boolean expression allowed
+                                  : not mendatary if not declared compiler will take 
+                                    true;
+             : increment decrement : any valid java statement allowed including sop
+                                   : optional
+
+             : all three part are optional
+             : curly braces are optional without it we can use only one non declrative
+               statement
+
+
+
+4> for each : itarate through collection and array
+			int[][] a;
+			for(int[] x : a){
+			 for (int[] y : x)
+			}
+
+
+
+
+
+
+
+1> break : inside switch : to break fall through
+         : inside loop :  while(true){
+         					if(true){
+         					break;
+         					}
+         				  } 
+         : inside labeled block : l1 : {
+         								 if(x>:11);
+         								 break;
+
+         								}
+
+
+
+2> continue : skip current iteration and continue next iteration
+             : can be used in loop after condition
+              if(true) continue ; 
+
+
+
+
+
+
+

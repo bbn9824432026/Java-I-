@@ -1,0 +1,38 @@
+public : class , interface ,enum ,  method , variable , constructor
+       : not to block
+       : visibility : any where
+
+default : class , interface , enums , method , variable , constructor 
+		: in current package only
+
+
+private : inner class , interface , enums , method , variable , constructor
+		: in current class only , not out side of class
+
+
+
+protected : inner class , interfasce , enums , method , variable , constructor
+		  : in current class and child class
+
+
+static : inner class , interface , enums , method , variable , block
+
+
+final : class , method , variable
+	  : can not create child class
+	  : can not override mewthod
+
+
+
+
+synchronized : method , block
+
+abstract : class , method , interface
+
+native : method
+
+strictfp : class , interface , enum , method
+
+transient : method
+
+volatile : method

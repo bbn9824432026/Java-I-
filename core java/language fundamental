@@ -1,0 +1,96 @@
+1> Identifier : class name , method name , variable name , label name
+			  : a-z , A-Z , 0-9 , _ , $
+			  : not start with digit
+			  : case sensitive
+			  : no length limit
+			  : reserved word can not use as identifier
+
+2> Reserved words : 
+
+
+3> Data type : variable and expression has type
+			 : 8 premitive datatype
+			 : Numeric data type(integral : floating)
+			 : char data type
+			 : boolean datatype
+
+3> literals  : constant value assign to variable is called literal
+			 : for byte , short , char , int all are of type int
+			 : for floating all are by default double
+			 : integral literal : decimal(0-9) , octal(0(0-8), hexadecimal(0x(0-8 , a-f))), binary(1.7v ob(0-1)) , underscore (_) in numeric literal (1_23)
+			 : to define long need explicitely suffix L
+			 : float suffix f
+			 : double suffix d
+			 : boolean (true , false)
+			 : char : int act as unicode no, 
+			 : string : sequence of character in double quote
+
+4> Arrays    : indexed collection of fixed size homogeneous element
+			 : declaration int[] a , int a[] , int []a , int[][] a , int [][]a , int a[][] , int[] []a , int[] a[] , int []a[];
+			 : int []a, []b , []b is invalid(cant assign dimention before second variable)
+			 :new int[char , byte , short , int] , new int[2147483647]
+			 :int[][][] a = new int[2][][];
+			  a[0] = new int[3][];
+			  a[0][0] = new int[1]
+			  a[0][1] = new int[2]
+			  a[0][2] = new int[3]
+			  a[1] = new int[2][];
+
+			  :new int[]{1,2,3,4,5,6}
+			   new int[][]{{1,2,3},{4,5,6}}
+			   new int[3]{1,2,3,4}
+
+5> Types of variable : primetive : represent primetive value
+					   reference : refer to object
+					 : instance : sepearte copy for each object
+					            : inside class outside any method , constructor , block
+					            : stored in heap as part of object
+					            : dont required initialization 
+					            : can access directly from instance area but not in 
+					              static area . to use in static area we need to cerate object
+					            : scope object creation to destroy
+
+					 : static  : single copy for every object
+					           : scope class loading unloading (.class file)
+					           : inside class outside any method , constructor , block
+					           : stored in method area
+					           : can be access from both static and instance area
+					           : can be access through class name or object
+					           : not require initialization
+
+					 :local  : temporary variable inside method , bloack , constructor
+					         : stored inside stack 
+					         : scope block execution to end.
+					         : initialization required
+					         : only final modifier applicable.
+
+6> var -arg method : 1.5 version onwords
+                   : methodOne(int... a)
+                   : int... a , int ...a , int...a
+                   : (int a , int... b) with general parameter
+                   : (int...a , int b) invalid , var-arg shuold be last
+                   : (int...a , int...b) invalid , only one var-arg allowed
+                   : var-arg method have least priority , if non var-arg method match not found than only it will called
+                   : we call assign array to var-arg method
+
+7>  main method : jvm is responsible to find main method(NoSuchMethodError : main)
+                : public static void main(String[] args)
+                : order of modifier is not importent
+                : string array in any form
+                : instead of args we can use any identifier
+                : can replace string array with var-arg
+                : final , synchronized , strictfp can applicable
+                : over loading possible but jvm call this signature only
+                : inheritance allowed
+
+
+8> memory areas in jvm : method area : static block , static variable , reference
+                         heap : object and corresponding instance variable
+                         stack : for every method call jvm create stack , local    
+                                 varible store in stack
+                         pc register : instruction execute next will store in 
+
+
+
+
+
