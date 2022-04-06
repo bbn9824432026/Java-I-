@@ -1,0 +1,434 @@
+spring jdbc vs plain jdbc
+
+1. No need of external responsibility to regiter driver , establish connection ,   
+create statement , execute query , close resources.
+
+2. all checked execption are internally converted to unchecked exception so easy to handel
+
+3. very good support for transaction
+
+4. to hold result we have only resultSet object which is not transferable over network.
+we can get result in form of rowset and collection
+
+5. to map record with beans in form of collection we have supprt like rowmapper
+
+
+
+.......................................................................
+
+spring jdbc methods
+
+1)For Non Select sql queries and DML SQL queries
+ public int update(String query)
+
+2)For DDL Sql Queries
+ public void execute(String query)
+
+3)For Select sql queries
+ public int queryForInt(String query)
+ public int queryForLong(String query)
+ public String queryForString(String query)
+ public Object queryForObject(String query)
+ public List query(String query)
+ public List queryForList(String query)
+ public Map queryForMap(String query)
+ public RowSet queryForRowSet(String query)
+
+
+
+While performing retrival operations to convert data from ResultSet object[records] to Bean
+objects Spring Framework has provided a predefined interface in the form of
+"org.springframework.jdbc.core.RowMapper" which contains the following method .
+
+public Object mapRow(ResultSet rs, int rowCount)
+
+
+
+--------------------------------------------------------------------------------------
+
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	<property name="dataSource" ref="dataSource"/>
+</bean>
+
+ <bean id="dataSource"
+	class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+ 	<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+ 	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+ 	<property name="username" value="system"/>
+ 	<property name="password" value="durga"/>
+ </bean>
+
+
+
+
+
+public interface StudentDao {
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate);
+	public String add(Student std);
+	public Student search(String sid);
+	public String update(Student std);
+	public String delete(String sid);
+}
+
+
+public class StudentDaoImpl implements StudentDao {
+	private JdbcTemplate jdbcTemplate;
+	String status = "";
+
+	@Override
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate ;
+	}
+
+	@Override
+	public String add(Student std) {
+		try {
+			jdbcTemplate.update("insert into student
+			values('"+std.getSid()+"','"+std.getSname()+"','"+std.getSaddr()+"')");
+			status = "success";
+		}catch(Exception e) {
+			status = "failure";
+			e.printStackTrace();
+		}
+		return status;
+	}
+
+	@Override
+	public Student search(String sid) {
+		Student std = null;
+		try {
+			std = jdbcTemplate.queryForObject("select * from student where
+			sid='"+sid+"'", new StudentMapper());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return std;
+	}
+
+
+	@Override
+	public String update(Student std) {
+		try {
+			jdbcTemplate.update("update student set
+			sname='"+std.getSname()+"',saddr='"+std.getSaddr()+"' where sid='"+std.getSid()+"'");
+			status="success";
+		}catch(Exception e) {
+			status="failure";
+			e.printStackTrace();
+		}
+		return status;
+	}
+
+
+	@Override
+	public String delete(String sid) {
+		try {
+			jdbcTemplate.update("delete from student where sid='"+sid+"'");
+			status="success";
+		} catch (Exception e) {
+			status="failure";
+			e.printStackTrace();
+		}
+		return status;
+		}
+}
+
+
+
+public class Student {
+	private String sid;
+	private String sname;
+	private String saddr;
+	setXXX() and getXXX()
+}
+
+
+public class StudentMapper implements RowMapper<Student> {
+
+	@Override
+	public Student mapRow(ResultSet rs, int row_No) throws SQLException {
+		Student std = new Student();
+		std.setSid(rs.getString("SID"));
+		std.setSname(rs.getString("SNAME"));
+		std.setSaddr(rs.getString("SADDR"));
+		return std;
+	}
+}
+
+
+
+
+* If we provide positional parameters(quetion mark) in sql queries then JdbcTemplate class will use
+
+*To provide values to the Positional parameters in SQL Queries we have to use Object[] with
+values as parametyer to all JdbcTemplate class provided query execution methods.
+
+
+public int update(String query, Object[] param_Values)
+public int queryForInt(String query, Object[] param_Values)
+public long queryForLong(String query, Object[] param_Values)
+public Object queryForObject(String query, Object[] param_Values, RowMapper rm)
+
+"PreparedStatement" internally to execute sql query instead of Statement.
+
+Ex:
+String query = "insert into student values(?,?,?)";
+int rowCount = jdbcTemplate.update(query, new Object[]{"S-111", "AAA", "Hyd"});
+
+
+
+
+------------------------------------------------------------------------------------
+
+NamedParameterJdbcTemplate
+
+EX:
+String query = "insert into student values(:sid, :sname, :saddr)";
+
+
+1.By Using Map directly.
+	String query = "insert into student values(:sid, :sname, :saddr)";
+	Map map = new HashMap();
+	map.put("sid", "S-111");
+	map.put("sname", "AAA");
+	map.put("saddr", "Hyd");
+	namedParameterJdbcTemplate.update(query, map);
+
+2.By using SqlParameterSource interface.
+	To provide values to the Named parameters Spring has provided the following two implementation
+	classes for SqlParameterSoure interface.
+ 		a)MapSqlParameterSource
+ 		b)BeanPropertySqlParameterSource
+
+ EX:
+	String query = "insert into student values(:sid, :sname, :saddr)";
+	SqlParameterSource param_Source = new MapSqlParameterSource("sid", "S-111");
+	param_Source = param_Source.addValue("sname", "AAA");
+	param_Source = param_Source.addValue("saddr", "Hyd");
+	namedParameterJdbcTemplate.update(query, param_Source);
+
+
+ EX:
+	String query = "insert into student values(:sid, :sname, :saddr)";
+	Student std = new Student();
+	std.setSid("S-111");
+	std.setSname("AAA");
+	std.setSaddr("Hyd");
+	SqlParameterSource param_Source = new BeanPropertySqlParameterSource(std );
+	namedParameterJdbcTemplate.update(query, param_Source);
+
+
+* Note: JdbcTemplate is allowing DataSource object injection through setter method,  but,
+NamedParameterJdbcTemplate class is allowing DataSource object injection through Constructor
+Dependency Injection.
+
+<bean id="namedParameterJdbcTemplate"
+	class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+	<constructor-arg ref="dataSource"/>
+</bean>
+
+ <bean id="dataSource"
+	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+ 	<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+ 	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+ 	<property name="username" value="system"/>
+ 	<property name="password" value="durga"/>
+ </bean>
+
+public class CustomerDaoImpl implements CustomerDao {
+	String status = "";
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+	public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate
+		namedParameterJdbcTemplate) { 		 	
+		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+	}
+
+
+
+-----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+ ---------------------------------------------------------------------
+
+SimpleJdbcTemplate:
+
+In Spring JDBC module, the main intention of SimpleJdbcTemplate class is to provide support for
+JDK5.0 version feratures like Auto Boxing, Auto Unboxing, Var-Arg methods,.....
+
+
+To execute SQL queries , SimpleJdbcTemplate class has provided the following methods.
+
+public Object execute(String sqlQuery)
+Note: To use this method we have to get JdbcOperations class by using getJdbcOperations()
+method.
+
+public int update(String query, Object ... params)
+public Object queryForInt(String query, Object ... params)
+public Object queryForLong(String query, Object ... params)
+public Object query(String query, Object ... params)
+public Object queryForObject(String query,Object ... params)
+----
+----
+Note: In case of SimpleJdbcTemplate class, to perform retrival operations, we have to use
+"ParameterizedRowMapper" inplace of RowMapper interface.
+
+
+<bean id="simpleJdbcTemplate"
+	class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+	<constructor-arg ref="dataSource"/>
+</bean>
+
+<bean id="dataSource"
+	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+ 	<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+ 	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+ 	<property name="username" value="system"/>
+ 	<property  name="password" value="durga"/>
+</bean>
+
+
+public class EmployeeDaoImpl implements EmployeeDao{
+
+	private SimpleJdbcTemplate simpleJdbcTemplate;
+	String status = "";
+
+	public void setSimpleJdbcTemplate(SimpleJdbcTemplate simpleJdbcTemplate) {
+	this.simpleJdbcTemplate = simpleJdbcTemplate;
+	}
+
+	@Override
+	public String add(Employee emp) {
+		String query = "insert into emp1
+		values("+emp.getEno()+",'"+emp.getEname()+"',"+emp.getEsal()+",'"+emp.getEaddr()+"')";
+		simpleJdbcTemplate.getJdbcOperations().execute(query);
+	status = "SUCCESS";
+	return status;
+	}
+
+}
+
+
+
+public class EmployeeMapper implements ParameterizedRowMapper<Employee> {
+	@Override
+	public Employee mapRow(ResultSet rs, int row_No) throws SQLException {
+		Employee emp = new Employee();
+		emp.setEno(rs.getInt("ENO"));
+		emp.setEname(rs.getString("ENAME"));
+		emp.setEsal(rs.getFloat("ESAL"));
+		emp.setEaddr(rs.getString("EADDR"));
+		return emp;
+	}
+}
+
+
+
+-------------------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------------------------
+
+DAO Support Classes:
+
+In Spring JDBC , we have to prepare DAO implementation classes with XXXTemplate property
+and the corresponding setXXX() method inorder to inject XXXTemplate class 	 
+
+
+There are three types of DAOSupport classes inorder to get Template object in DAO classes.
+1.JdbcDaoSupport : public JdbcTemplate getJdbcTemplate() 	
+2.NamedParameterJdbcDaoSupport : public NamedParameterJdbcTemplate getNamedparameterJdbctemplate() 	
+3.SimpleJdbcDaoSupport : public SimpleJdbcTemplate getSimpleJdbcTemplate()
+
+public class EmployeeDaoImpl extends JdbcDaoSupport implements EmployeeDao{
+	public String insert(int eno, String ename, float esal, String eaddr){
+		getJdbcTemplate().update("insert into emp1 values("+eno+",'"+ename+"',"+esal+",'"+eaddr+"')");
+		return "SUCCESS";
+	}
+----
+----
+}
+
+
+----------------------------------------------------------------------------
+
+Spring Batch Updations
+Batch Processing:
+
+To perform Batch Updations in Spring JDBC we have to use the following method from
+JdbcTemplate class.
+
+public int[] batchUpdate(String sql_prepared_Statement, BatchPreparedStatementSetter setter)
+
+Where BatchPreparedStatementSetter interface contains the following two methods
+public void setValues(PreparedStatement ps, int index)
+public int getBatchSize()
+
+Where setValues() method will be executed for each and every record to set values to the
+positional parameters existed in PreparedStatement object by getting values from the provided
+List.
+
+
+ <bean id="dataSource"
+	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+ 	<property name="driverClassName" value="${jdbc.driverClassName}"/>
+ 	<property name="url" value="${jdbc.url}"/>
+ 	<property name="username" value="${jdbc.username}"/>
+ 	<property 	name="password" value="${jdbc.password}"/>
+ </bean>
+.
+
+
+
+public interface EmployeeDao {
+	public int[] insert(List<Employee> list);
+}
+
+
+public class EmployeeDaoImpl implements EmployeeDao{
+
+	private DataSource dataSource;
+	JdbcTemplate jdbcTemplate;
+
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+
+	@Override
+	public int[] insert(List<Employee> list) {
+	int[] rowCounts = null;
+	try {
+		String sql = "insert into emp1 values(?,?,?,?)";
+		rowCounts = jdbcTemplate.batchUpdate(sql, new
+			BatchPreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps, int i) throws
+					SQLException {
+						ps.setInt(1, list.get(i).getEno());
+						ps.setString(2, list.get(i).getEname());
+						ps.setFloat(3, list.get(i).getEsal());
+						ps.setString(4, list.get(i).getEaddr());
+					}
+				@Override
+				public int getBatchSize() {
+					// TODO Auto-generated method stubreturn list.size();
+				}
+			});
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return rowCounts;
+	}
+}
